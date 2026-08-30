@@ -1,0 +1,21 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Vistaar — engine self-test</title>
+<body style="font:13px ui-monospace,monospace;padding:20px;background:#111;color:#ddd">
+<pre id="out">running…</pre>
+<script type="module">
+import { runAll } from './js/diagnostics.js';
+const out = document.getElementById('out');
+const r = await runAll();
+let s = `PASS ${r.pass}/${r.total}  (${r.ms}ms)\n\n`;
+for(const suite of r.results){
+  s += `── ${suite.name}\n`;
+  for(const t of suite.tests){
+    s += `  ${t.ok?'PASS':'FAIL'}  ${t.label}\n        ${t.detail}  [${t.ms}ms]\n`;
+  }
+  s += '\n';
+}
+out.textContent = s;
+window.__RESULT__ = r;
+console.log(s);
+</script>

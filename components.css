@@ -1,0 +1,160 @@
+/* ============================================================================
+   Components — capture, pricing, matching, buyer, diagnostics.
+   Split from app.css (tokens, chrome, primitives) so the design system stays
+   readable on its own.
+   ========================================================================= */
+
+/* ============================ capture ============================= */
+.camstage{
+  position:relative;aspect-ratio:4/3;background:#1B1815;overflow:hidden;
+  display:grid;place-items:center;
+}
+.camstage video{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s var(--ease)}
+.camstage.live video{opacity:1}
+.camguide{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.camguide span{
+  width:64%;aspect-ratio:1;border-radius:18px;
+  box-shadow:0 0 0 2px rgba(255,255,255,.5), 0 0 0 2000px rgba(0,0,0,.26);
+}
+.camhint{
+  position:absolute;left:12px;right:12px;bottom:12px;text-align:center;color:#fff;
+  font-size:12.5px;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.6);
+}
+.camfallback{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:10px;color:rgba(255,255,255,.62);font-size:12.5px;
+  text-align:center;padding:0 30px;
+}
+.camfallback svg{width:34px;height:34px}
+
+.shotgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.shot{
+  position:relative;aspect-ratio:1;border-radius:var(--r-md);background:var(--paper-2);
+  box-shadow:inset 0 0 0 1px rgba(22,19,15,.07);display:grid;place-items:center;overflow:hidden;
+  transition:box-shadow .25s var(--ease);
+}
+.shot.got{box-shadow:inset 0 0 0 1.5px var(--green), 0 0 0 1px rgba(0,0,0,.08)}
+.shot canvas{width:100%;height:100%;object-fit:cover}
+.shot .ph{color:var(--faint);display:grid;place-items:center}
+.shot .ph svg{width:18px;height:18px}
+.shot .lb{
+  position:absolute;left:0;right:0;bottom:0;padding:3px 4px;font-size:8.5px;font-weight:650;
+  text-align:center;color:var(--muted);background:rgba(250,247,241,.9);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.shot.got .lb{color:var(--ink-2)}
+.shot .grade{
+  position:absolute;top:4px;left:4px;width:17px;height:17px;border-radius:6px;
+  display:grid;place-items:center;font-size:10px;font-weight:800;color:#fff;background:var(--green);
+}
+.shot .grade.g-B{background:var(--indigo)}
+.shot .grade.g-C{background:var(--gold)}
+.shot .grade.g-F{background:var(--terra)}
+.shot .retake{
+  position:absolute;top:4px;right:4px;width:19px;height:19px;border-radius:7px;
+  display:grid;place-items:center;background:rgba(22,19,15,.62);color:#fff;
+}
+.shot .retake svg{width:11px;height:11px}
+
+.qc{display:flex;flex-direction:column;gap:7px}
+.qcrow{display:grid;grid-template-columns:78px 1fr auto;align-items:center;gap:9px;font-size:11.5px}
+.qcrow .qk{color:var(--ink-2);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qcrow .qv{color:var(--faint);font-size:10.5px;white-space:nowrap}
+.qbar{position:relative;height:6px;border-radius:99px;background:var(--line-2);overflow:hidden}
+.qbar i{position:absolute;inset:0 auto 0 0;border-radius:99px;background:var(--green);
+  transform-origin:left;animation:growX .55s var(--spring) both}
+.qbar.warn i{background:var(--gold)}
+.qbar.bad i{background:var(--terra)}
+.qbar u{position:absolute;inset:0 auto 0 0;border-radius:99px;background:var(--green);
+  opacity:.32;text-decoration:none;animation:growX .7s var(--spring) both .15s}
+.card.qc-bad{box-shadow:0 0 0 1.5px var(--terra-line), var(--sh-1)}
+.fixlist{margin:9px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.fixlist li{font-size:11px;color:var(--muted);line-height:1.4}
+.fixlist code{font-family:var(--mono);font-size:10px;background:var(--paper-2);padding:1px 5px;
+  border-radius:5px;color:var(--indigo);margin-right:5px}
+
+/* ============================ pricing ============================= */
+.comprow{display:flex;align-items:center;gap:9px;font-size:12.5px}
+.comprow .cs{flex:0 0 34px;height:5px;border-radius:99px;background:var(--line-2);
+  position:relative;overflow:hidden}
+.comprow .cs::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);
+  background:var(--indigo);border-radius:99px}
+.comprow .ct{flex:1;min-width:0;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.comprow .ct em{font-style:normal;color:var(--faint);font-size:10.5px;margin-left:5px}
+.comprow b{font-weight:650;white-space:nowrap}
+
+/* ============================ matching ============================= */
+.factor{display:flex;align-items:center;gap:9px;font-size:11.5px}
+.factor .fk{flex:1;min-width:0;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.matchrow{padding:11px 0}
+.matchrow+.matchrow{box-shadow:inset 0 1px 0 var(--line-2)}
+.matchrow .mh{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.matchrow .mh b{font-size:13.5px;display:block}
+.matchrow .mh small{font-size:11px;color:var(--muted);display:block}
+.fbars{display:flex;gap:5px;align-items:flex-end;height:34px;margin-bottom:6px}
+.fb{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;gap:3px}
+.fb i{width:100%;border-radius:4px 4px 2px 2px;min-height:2px;
+  animation:growY .5s var(--spring) both;transform-origin:bottom}
+.fb em{font-style:normal;font-size:8px;color:var(--faint);font-weight:650}
+
+/* ============================ money ============================= */
+.deltabar{display:flex;flex-direction:column;gap:9px}
+.deltabar .db{display:grid;grid-template-columns:66px 1fr auto;align-items:center;gap:10px;font-size:12px}
+.deltabar .db span{color:var(--muted);font-weight:600}
+.deltabar .db i{height:12px;border-radius:5px;display:block;transform-origin:left;
+  animation:growX .7s var(--spring) both}
+.deltabar .db b{font-weight:650;font-size:13px}
+
+/* ============================ buyer ============================= */
+.searchbar{
+  display:flex;align-items:center;gap:9px;padding:0 14px;min-height:48px;border-radius:15px;
+  background:var(--card);box-shadow:0 0 0 1px var(--line), var(--sh-1);color:var(--faint);
+}
+.searchbar svg{width:18px;height:18px;flex:0 0 18px}
+.searchbar input{flex:1;min-width:0;border:0;background:none;outline:0;font-size:15px;color:var(--ink)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.pcard{
+  display:flex;flex-direction:column;gap:6px;text-align:left;padding:8px;border-radius:var(--r-lg);
+  background:var(--card);box-shadow:0 0 0 1px rgba(22,19,15,.045), var(--sh-1);
+  transition:transform .16s var(--ease), box-shadow .22s var(--ease);
+}
+.pcard:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(34,55,107,.2), var(--sh-2)}
+.pcard:active{transform:scale(.98)}
+.pcard .thumb{border-radius:12px}
+.pcard b{font-size:13px;font-weight:650;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pcard small{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard .pr{display:flex;align-items:baseline;gap:6px;font-size:14.5px;font-weight:680;margin-top:auto}
+.pcard .pr em{font-style:normal;font-size:10px;color:var(--faint);font-weight:600}
+.pcard .tag svg{width:9px;height:9px;display:inline;vertical-align:-1px;margin-right:2px}
+
+.card.prov{background:linear-gradient(180deg,var(--gold-soft),var(--card) 46%);
+  box-shadow:0 0 0 1px var(--gold-line), var(--sh-1)}
+.makingclip{display:flex;align-items:center;gap:10px;padding:11px;border-radius:var(--r-md);
+  background:rgba(22,19,15,.045);font-size:12px;color:var(--ink-2);line-height:1.4}
+.makingclip svg{width:24px;height:24px;flex:0 0 24px;color:var(--gold)}
+
+/* ============================ diagnostics ============================= */
+.tline{display:flex;align-items:flex-start;gap:9px;padding:8px 0}
+.tline+.tline{box-shadow:inset 0 1px 0 var(--line-2)}
+.tline .tm{flex:0 0 18px;margin-top:1px}
+.tline .tm svg{width:15px;height:15px}
+.tline.ok .tm{color:var(--green)}
+.tline.bad .tm{color:var(--terra)}
+.tline .tt2{flex:1;min-width:0}
+.tline .tt2 b{display:block;font-size:12.5px;font-weight:600;line-height:1.35}
+.tline .tt2 small{display:block;font-size:11px;color:var(--muted);line-height:1.4;margin-top:2px}
+.tline.bad .tt2 small{color:var(--terra)}
+.tline .tms{flex:0 0 auto;font-size:10px;color:var(--faint);margin-top:2px}
+
+/* ============================ rail sections ============================= */
+.railsec{margin-bottom:16px}
+.railsec>b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--muted);font-weight:700;margin-bottom:7px}
+.railsec pre.code{background:var(--paper);padding:10px;border-radius:10px;
+  box-shadow:inset 0 0 0 1px var(--line-2)}
+.railsec .note{margin-top:7px}
+
+@keyframes slideDown{to{transform:translateY(100%)}}
+@keyframes fadeOut{to{opacity:0}}
