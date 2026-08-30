@@ -5,7 +5,7 @@ A voice-first business manager for artisans and weavers. One voice note becomes 
 priced, authenticated listing on ONDC, Indiahandmade, GeM and WhatsApp — and the
 order comes back as a phone call in her language.
 
-**Live: https://vistaar.vercel.app**
+**Live — https://vistaar-sih.vercel.app**  ·  **Repo — https://github.com/vayam404/vistaar**
 
 Three role-based surfaces over one dataset: **artisan**, **buyer**, **ministry**.
 An RFQ posted in the buyer app really does land in the artisan's inbox; the
@@ -17,7 +17,7 @@ between them.
 
 ## Run
 
-Live: **https://vistaar.vercel.app** — open it on a phone, it is the same build.
+Live: **https://vistaar-sih.vercel.app** — open it on a phone, it is the same build.
 
 Locally:
 
@@ -340,7 +340,7 @@ Vercel uploads the directory and serves it; there is nothing to compile.
 cd vistaar && npx vercel deploy --prod --yes
 ```
 
-Live at **https://vistaar.vercel.app**. `.vercelignore` keeps the local dev
+Live at **https://vistaar-sih.vercel.app**. `.vercelignore` keeps the local dev
 server out of the bundle.
 
 `vercel.json` pins it as a static site with long-lived caching on assets and
